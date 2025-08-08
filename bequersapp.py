@@ -122,5 +122,13 @@ for i, app in enumerate(apps):
         except Exception as e:
             st.error(f"❌ No se pudo cargar la imagen: {app['img']}")
 
-        if st.button(f"🚀 Ir a {app['name']}", key=app["name"]):
-            webbrowser.open_new_tab(app["url"])
+        st.markdown(
+            f"""
+            <a href="{app['url']}" target="_blank">
+                <button style='margin-top: 10px; width: 100%; font-weight: bold;'>🚀 Ir a {app['name']}</button>
+            </a>
+            """,
+            unsafe_allow_html=True
+        )
+
+
