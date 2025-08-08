@@ -1,5 +1,5 @@
 import streamlit as st
-import base64
+from PIL import Image
 import webbrowser
 
 # --------- CONFIGURACIÓN DE PÁGINA ---------
@@ -93,19 +93,18 @@ apps = [
     }
 ]
 
-# --------- BOTONES CON IMÁGENES ESCALADAS ---------
+# --------- BOTONES CON IMÁGENES REDUCIDAS ---------
 cols = st.columns(3)
 
 for i, app in enumerate(apps):
     with cols[i % 3]:
-        st.markdown(
-            f"""
-            <div style="text-align: center;">
-                <img src="{app['img']}" alt="{app['name']}" style="width: 60%; margin-bottom: 10px;" />
-                <p style="font-weight: bold; color: white;">{app['name']}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        try:
+            image = Image.open(app["img"])
+            width, height = image.size
+            resized = image.resize((int(width * 0.6), int(height * 0.6)))
+            st.image(resized, use_container_width=False, caption=app["name"])
+        except Exception as e:
+            st.error(f"❌ No se pudo cargar la imagen: {app['img']}")
+
         if st.button(f"🚀 Ir a {app['name']}", key=app["name"]):
             webbrowser.open_new_tab(app["url"])
