@@ -1,13 +1,13 @@
 import streamlit as st
 
-# --------- CONFIGURACIÓN DE PÁGINA ---------
+# Configuración de página
 st.set_page_config(
     page_title="Portal Bequers",
     layout="wide",
     page_icon="https://www.bequers.es/themes/beckers/assets/img/favicon.ico"
 )
 
-# --------- FONDO CON GRADIENTE AZUL (50%) Y ESTILO TARJETAS ---------
+# Fondo + estilo tarjetas
 def set_background_and_style():
     background_image = "https://www.bequers.es/storage/app/media/hero-beckers-big.png"
     gradient = "linear-gradient(rgba(0, 0, 128, 0.5), rgba(0, 0, 128, 0.5))"
@@ -20,31 +20,19 @@ def set_background_and_style():
             background-position: center;
             background-attachment: fixed;
         }}
-
-        .card-container {{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
+        .card {{
             background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
             padding: 20px;
+            border-radius: 12px;
+            text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 10px rgba(255,255,255,0.1);
         }}
-
-        .card-container:hover {{
+        .card:hover {{
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(255,255,255,0.5);
         }}
-
-        .card-container img {{
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-        }}
-
-        .card-container a button {{
+        .card a button {{
             background-color: #222;
             border: 1px solid #fff;
             color: white;
@@ -54,8 +42,7 @@ def set_background_and_style():
             cursor: pointer;
             transition: all 0.3s ease-in-out;
         }}
-
-        .card-container a button:hover {{
+        .card a button:hover {{
             background-color: #444;
             box-shadow: 0 0 10px white;
         }}
@@ -66,11 +53,8 @@ def set_background_and_style():
 
 set_background_and_style()
 
-# --------- LOGIN ---------
-USERS = {
-    "admin": "1234",
-    "usuario": "clave"
-}
+# Login
+USERS = {"admin": "1234", "usuario": "clave"}
 
 def login():
     st.sidebar.image("https://www.bequers.es/themes/beckers/assets/img/favicon.ico", width=80)
@@ -90,59 +74,36 @@ if not st.session_state["login"]:
     login()
     st.stop()
 
-# --------- TÍTULO CON LOGO ---------
-st.markdown(
-    """
+# Título
+st.markdown("""
     <div style='display: flex; align-items: center; margin-bottom: 30px;'>
         <img src="https://www.bequers.es/themes/beckers/assets/img/favicon.ico" style="height: 50px; margin-right: 20px;" />
         <h1 style='color: white;'>Portal de Aplicaciones Bequers</h1>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
-# --------- APPS ---------
+# Apps
 apps = [
-    {
-        "name": "Guías Azerca",
-        "url": "https://guiasazerca.streamlit.app/",
-        "img": "images/guiasazerca.png"
-    },
-    {
-        "name": "Bequers Captación",
-        "url": "https://bequerscaptacion.streamlit.app/",
-        "img": "images/bequerscaptacion.png"
-    },
-    {
-        "name": "Novel Generar",
-        "url": "https://novelgenerar.streamlit.app/",
-        "img": "images/novelgenerar.png"
-    },
-    {
-        "name": "Sala Generar",
-        "url": "https://salagenerar.streamlit.app/",
-        "img": "images/salagenerar.png"
-    },
-    {
-        "name": "Recupón Generar",
-        "url": "https://recupongenerar.streamlit.app/",
-        "img": "images/recupongenerar.png"
-    }
+    {"name": "Guías Azerca", "url": "https://guiasazerca.streamlit.app/", "img": "images/guiasazerca.png"},
+    {"name": "Bequers Captación", "url": "https://bequerscaptacion.streamlit.app/", "img": "images/bequerscaptacion.png"},
+    {"name": "Novel Generar", "url": "https://novelgenerar.streamlit.app/", "img": "images/novelgenerar.png"},
+    {"name": "Sala Generar", "url": "https://salagenerar.streamlit.app/", "img": "images/salagenerar.png"},
+    {"name": "Recupón Generar", "url": "https://recupongenerar.streamlit.app/", "img": "images/recupongenerar.png"}
 ]
 
-# --------- MOSTRAR TARJETAS EN UNA FILA ---------
+# Tarjetas horizontales
 cols = st.columns(5)
 
 for i, app in enumerate(apps):
     with cols[i]:
-        st.markdown(
-            f"""
-            <div class="card-container">
-                <img src="{app['img']}" alt="{app['name']}">
-                <a href="{app['url']}" target="_blank">
-                    <button>🚀 Ir a {app['name']}</button>
-                </a>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        # Abrimos tarjeta
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        # Imagen que sí funciona
+        st.image(app["img"], width=60)
+        # Botón
+        st.markdown(f"""
+            <a href="{app['url']}" target="_blank">
+                <button>🚀 Ir a {app['name']}</button>
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
