@@ -1,6 +1,4 @@
 import streamlit as st
-from PIL import Image
-import webbrowser
 
 # --------- CONFIGURACIÓN DE PÁGINA ---------
 st.set_page_config(
@@ -9,7 +7,7 @@ st.set_page_config(
     page_icon="https://www.bequers.es/themes/beckers/assets/img/favicon.ico"
 )
 
-# --------- FONDO PERSONALIZADO CON GRADIENTE 50% ---------
+# --------- FONDO CON GRADIENTE AZUL (50%) ---------
 def set_background():
     background_image = "https://www.bequers.es/storage/app/media/hero-beckers-big.png"
     gradient = "linear-gradient(rgba(0, 0, 128, 0.5), rgba(0, 0, 128, 0.5))"
@@ -23,29 +21,50 @@ def set_background():
             background-attachment: fixed;
         }}
 
-        /* BOTONES CON EFECTO HOVER */
-        .stButton>button {{
-            background-color: #ffffff10;
-            color: white;
-            border: 1px solid #ffffff40;
-            transition: all 0.3s ease;
+        .card {{
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+            margin: 10px;
         }}
 
-        .stButton>button:hover {{
-            box-shadow: 0 0 10px 3px #ffffffaa;
-            border: 1px solid #ffffff80;
-            background-color: #ffffff30;
-            color: #fff;
+        .card:hover {{
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            transform: scale(1.05);
+        }}
+
+        .card img {{
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }}
+
+        .card a button {{
+            background-color: #222;
+            border: 1px solid #fff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s ease-in-out;
+        }}
+
+        .card a button:hover {{
+            background-color: #444;
+            box-shadow: 0 0 10px white;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-# Aplicamos fondo desde el inicio para que funcione también en el login
 set_background()
 
-# --------- SISTEMA DE LOGIN ---------
+# --------- LOGIN ---------
 USERS = {
     "admin": "1234",
     "usuario": "clave"
@@ -80,7 +99,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --------- URLS Y LOGOS ---------
+# --------- APPS ---------
 apps = [
     {
         "name": "Guías Azerca",
@@ -109,26 +128,19 @@ apps = [
     }
 ]
 
-# --------- BOTONES CON IMÁGENES REDUCIDAS Y EFECTO HOVER ---------
+# --------- TARJETAS CON HTML ---------
 cols = st.columns(5)
 
 for i, app in enumerate(apps):
     with cols[i]:
-        try:
-            image = Image.open(app["img"])
-            width, height = image.size
-            resized = image.resize((int(width * 0.2), int(height * 0.2)))
-            st.image(resized, use_container_width=False)
-        except Exception as e:
-            st.error(f"❌ No se pudo cargar la imagen: {app['img']}")
-
         st.markdown(
             f"""
-            <a href="{app['url']}" target="_blank">
-                <button style='margin-top: 10px; width: 100%; font-weight: bold;'>🚀 Ir a {app['name']}</button>
-            </a>
+            <div class="card">
+                <img src="{app['img']}" alt="{app['name']}" />
+                <a href="{app['url']}" target="_blank">
+                    <button>🚀 Ir a {app['name']}</button>
+                </a>
+            </div>
             """,
             unsafe_allow_html=True
         )
-
-
