@@ -93,7 +93,7 @@ apps = [
     }
 ]
 
-# --------- BOTONES CON IMÁGENES EN UNA SOLA FILA ---------
+# --------- BOTONES CON IMÁGENES REDUCIDAS Y TEXTO ---------
 cols = st.columns(5)
 
 for i, app in enumerate(apps):
@@ -101,10 +101,10 @@ for i, app in enumerate(apps):
         try:
             image = Image.open(app["img"])
             width, height = image.size
-            resized = image.resize((int(width * 0.8), int(height * 0.8)))
+            resized = image.resize((int(width * 0.2), int(height * 0.2)))
             st.image(resized, use_container_width=False)
         except Exception as e:
             st.error(f"❌ No se pudo cargar la imagen: {app['img']}")
 
-        if st.button("🚀", key=app["name"]):
+        if st.button(f"🚀 Ir a {app['name']}", key=app["name"]):
             webbrowser.open_new_tab(app["url"])
