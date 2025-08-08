@@ -1,10 +1,13 @@
 import streamlit as st
 import base64
-from PIL import Image
 import webbrowser
 
 # --------- CONFIGURACIÓN DE PÁGINA ---------
-st.set_page_config(page_title="Portal Bequers", layout="wide", page_icon="https://www.bequers.es/themes/beckers/assets/img/favicon.ico")
+st.set_page_config(
+    page_title="Portal Bequers",
+    layout="wide",
+    page_icon="https://www.bequers.es/themes/beckers/assets/img/favicon.ico"
+)
 
 # --------- SISTEMA DE LOGIN ---------
 USERS = {
@@ -90,11 +93,19 @@ apps = [
     }
 ]
 
-# --------- BOTONES CON IMÁGENES ---------
+# --------- BOTONES CON IMÁGENES ESCALADAS ---------
 cols = st.columns(3)
 
 for i, app in enumerate(apps):
     with cols[i % 3]:
-        st.image(app["img"], use_column_width="always", caption=app["name"])
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <img src="{app['img']}" alt="{app['name']}" style="width: 60%; margin-bottom: 10px;" />
+                <p style="font-weight: bold; color: white;">{app['name']}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         if st.button(f"🚀 Ir a {app['name']}", key=app["name"]):
             webbrowser.open_new_tab(app["url"])
