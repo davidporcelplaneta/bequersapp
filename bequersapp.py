@@ -36,12 +36,6 @@ def set_background():
             transform: scale(1.05);
         }}
 
-        .card img {{
-            width: 60px;
-            height: 60px;
-            margin-bottom: 15px;
-        }}
-
         .card a button {{
             background-color: #222;
             border: 1px solid #fff;
@@ -128,18 +122,18 @@ apps = [
     }
 ]
 
-# --------- TARJETAS CON HTML ---------
+# --------- TARJETAS CON ST.IMAGE + HTML ---------
 cols = st.columns(5)
 
 for i, app in enumerate(apps):
     with cols[i]:
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        st.image(app["img"], width=60)
         st.markdown(
             f"""
-            <div class="card">
-                <img src="{app['img']}" alt="{app['name']}" />
-                <a href="{app['url']}" target="_blank">
-                    <button>🚀 Ir a {app['name']}</button>
-                </a>
+            <a href="{app['url']}" target="_blank">
+                <button>🚀 Ir a {app['name']}</button>
+            </a>
             </div>
             """,
             unsafe_allow_html=True
