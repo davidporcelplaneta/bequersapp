@@ -9,6 +9,42 @@ st.set_page_config(
     page_icon="https://www.bequers.es/themes/beckers/assets/img/favicon.ico"
 )
 
+# --------- FONDO PERSONALIZADO CON GRADIENTE 50% ---------
+def set_background():
+    background_image = "https://www.bequers.es/storage/app/media/hero-beckers-big.png"
+    gradient = "linear-gradient(rgba(0, 0, 128, 0.5), rgba(0, 0, 128, 0.5))"
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background: {gradient}, url("{background_image}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }}
+
+        /* BOTONES CON EFECTO HOVER */
+        .stButton>button {{
+            background-color: #ffffff10;
+            color: white;
+            border: 1px solid #ffffff40;
+            transition: all 0.3s ease;
+        }}
+
+        .stButton>button:hover {{
+            box-shadow: 0 0 10px 3px #ffffffaa;
+            border: 1px solid #ffffff80;
+            background-color: #ffffff30;
+            color: #fff;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Aplicamos fondo desde el inicio para que funcione también en el login
+set_background()
+
 # --------- SISTEMA DE LOGIN ---------
 USERS = {
     "admin": "1234",
@@ -32,26 +68,6 @@ if "login" not in st.session_state:
 if not st.session_state["login"]:
     login()
     st.stop()
-
-# --------- FONDO PERSONALIZADO CON GRADIENTE ---------
-def set_background():
-    background_image = "https://www.bequers.es/storage/app/media/hero-beckers-big.png"
-    gradient = "linear-gradient(rgba(0, 0, 128, 0.3), rgba(0, 0, 128, 0.3))"
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background: {gradient}, url("{background_image}");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-set_background()
 
 # --------- TÍTULO CON LOGO ---------
 st.markdown(
@@ -93,7 +109,7 @@ apps = [
     }
 ]
 
-# --------- BOTONES CON IMÁGENES REDUCIDAS Y TEXTO ---------
+# --------- BOTONES CON IMÁGENES REDUCIDAS Y EFECTO HOVER ---------
 cols = st.columns(5)
 
 for i, app in enumerate(apps):
